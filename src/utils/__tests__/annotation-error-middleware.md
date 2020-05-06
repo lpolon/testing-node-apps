@@ -31,6 +31,11 @@ test('responds with 401 for express-jwt UnauthorizedError', () => {
 ```
 
 para melhor manutenção de testes, vamos criar uma factory de objetos:
-- diminui código duplicado;
-- explicita o que é importante sobre o objeto em cada um dos testes (erro, req, next...)
 
+- diminui código duplicado;
+- explicita o que é importante sobre o objeto em cada um dos testes (erro, req,
+  next...)
+
+Esse tipo de abstração costuma ser reutilizada por diversos testes e crescer
+conforme a aplicação cresce. criamos root/test/util/generate.js. O Kent usa a
+cfg do jest para importar esse arquivo como um node module.
