@@ -1,6 +1,17 @@
 import {UnauthorizedError} from 'express-jwt'
 import errorMiddleware from '../error-middleware'
 // Testing Middleware
+
+// stubs of .status() and .json() middleware. implementation doesn't metter
+const buildRes = overrides => {
+  const res = {
+    status: jest.fn(() => res),
+    json: jest.fn(() => res),
+    ...overrides,
+  }
+  return res
+}
+
 test('responds with 401 for express-jwt UnauthorizedError', () => {
   // setup
   /*whatever code or message and check from error to make it very clear our intention in this test*/
@@ -9,10 +20,7 @@ test('responds with 401 for express-jwt UnauthorizedError', () => {
   // create stubs
   const error = new UnauthorizedError(code, {message})
   const req = {} // just the right type
-  const res = {
-    status: jest.fn(() => res),
-    json: jest.fn(() => res),
-  } // stubs of .status() and .json() middleware. implementation doesn't metter
+  const res = buildRes()
   const next = jest.fn() // implementation doesn't metter. just whether it was called or not.
   errorMiddleware(error, req, res, next)
   // defensive testing: next() should no be called in a error middleware
@@ -31,11 +39,7 @@ test('calls next if headersSent is true', () => {
   // a lot of repetition:
   const error = new Error(`doesn't matter in this test`)
   const req = {}
-  const res = {
-    status: jest.fn(() => res),
-    json: jest.fn(() => res),
-    headersSent: true,
-  }
+  const res = buildRes({headersSent: true})
   const next = jest.fn()
   errorMiddleware(error, req, res, next)
   expect(next).toHaveBeenCalledTimes(1)
@@ -47,10 +51,7 @@ test('calls next if headersSent is true', () => {
 test('responds with 500 and the error object', () => {
   const error = new Error('whatever')
   const req = {}
-  const res = {
-    status: jest.fn(() => res),
-    json: jest.fn(() => res),
-  }
+  const res = buildRes()
   const next = jest.fn()
 
   errorMiddleware(error, req, res, next)

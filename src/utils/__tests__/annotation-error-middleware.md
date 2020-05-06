@@ -1,4 +1,5 @@
 v1:
+
 ```js
 import {UnauthorizedError} from 'express-jwt'
 import errorMiddleware from '../error-middleware'
@@ -27,17 +28,9 @@ test('responds with 401 for express-jwt UnauthorizedError', () => {
   })
   expect(res.json).toHaveBeenCalledTimes(1)
 })
-
-// 🐨 Write a test for the headersSent case
-
-// 🐨 Write a test for the else case (responds with a 500)
-
-/*
-const myFn = jest.fn(() => 42)
-const result = myFn({message: 'hello'})
-
-expect(result).toBe(42)
-expect(myFn).toHaveBeenCalledWith({message: 'hello'})
-expect(myFn).toHaveBeenCalledTimes(1)
-*/
 ```
+
+para melhor manutenção de testes, vamos criar uma factory de objetos:
+- diminui código duplicado;
+- explicita o que é importante sobre o objeto em cada um dos testes (erro, req, next...)
+
