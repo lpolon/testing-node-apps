@@ -1,3 +1,5 @@
+v1:
+```js
 import {UnauthorizedError} from 'express-jwt'
 import errorMiddleware from '../error-middleware'
 // Testing Middleware
@@ -27,22 +29,6 @@ test('responds with 401 for express-jwt UnauthorizedError', () => {
 })
 
 // 🐨 Write a test for the headersSent case
-test('calls next if headersSent is true', () => {
-  // a lot of repetition:
-  const error = new Error(`doesn't matter in this test`)
-  const req = {}
-  const res = {
-    status: jest.fn(() => res),
-    json: jest.fn(() => res),
-    headersSent: true,
-  }
-  const next = jest.fn()
-  errorMiddleware(error, req, res, next)
-  expect(next).toHaveBeenCalledTimes(1)
-  expect(next).toHaveBeenCalledWith(error)
-  expect(res.status).not.toHaveBeenCalled()
-  expect(res.json).not.toHaveBeenCalled()
-})
 
 // 🐨 Write a test for the else case (responds with a 500)
 
@@ -54,3 +40,4 @@ expect(result).toBe(42)
 expect(myFn).toHaveBeenCalledWith({message: 'hello'})
 expect(myFn).toHaveBeenCalledTimes(1)
 */
+```
